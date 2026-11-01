@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export const Route = createFileRoute("/auth")({
-  validateSearch: (s: Record<string, unknown>) => ({ mode: s.mode === "register" ? ("register" as const) : undefined }),
+  validateSearch: (s: Record<string, unknown>): { mode?: "register" } => (s["mode"] === "register" ? { mode: "register" } : {}),
   head: () => ({
     meta: [
       { title: "تسجيل الدخول — ABDO SHOP" },
@@ -43,7 +43,7 @@ function AuthPage() {
     try {
       if (mode === "register") {
         const p = registerSchema.safeParse(form);
-        if (!p.success) return void toast.error(p.error.issues[0].message);
+        if (!p.success) return void toast.error(p.error.issues[0]?.message ?? "خطأ");
         const { error } = await supabase.auth.signUp({
           email: p.data.email,
           password: p.data.password,

@@ -15,7 +15,7 @@ import { productsQuery } from "@/lib/queries";
 import { dh } from "@/lib/commission";
 
 export const Route = createFileRoute("/_authenticated/app/new-order")({
-  validateSearch: (s: Record<string, unknown>) => ({ product: typeof s.product === "string" ? s.product : undefined }),
+  validateSearch: (s: Record<string, unknown>): { product?: string } => (typeof s["product"] === "string" ? { product: s["product"] } : {}),
   component: NewOrder,
 });
 
@@ -47,9 +47,9 @@ function NewOrder() {
   const review = (e: React.FormEvent) => {
     e.preventDefault();
     const p = schema.safeParse(f);
-    if (!p.success) return toast.error(p.error.issues[0].message);
-    if (product?.colors.length && !f.color) return toast.error("اختار اللون");
-    if (product?.sizes.length && !f.size) return toast.error("اختار المقاس");
+    if (!p.success) { toast.error(p.error.issues[0]?.message ?? "خطأ"); return; }
+    if (product?.colors.length && !f.color) { toast.error("اختار اللون"); return; }
+    if (product?.sizes.length && !f.size) { toast.error("اختار المقاس"); return; }
     setStep("review");
   };
 
@@ -59,7 +59,7 @@ function NewOrder() {
     const { data: u } = await supabase.auth.getUser();
     const { data, error } = await supabase.from("orders").insert({ ...p, affiliate_id: u.user!.id }).select("order_number").single();
     setBusy(false);
-    if (error) return toast.error("ما تقدرش تزيد الطلب: " + error.message);
+    if (error) { toast.error("ما تقدرش تزيد الطلب: " + error.message); return; }
     setOrderNo(data.order_number);
     qc.invalidateQueries({ queryKey: ["orders"] });
     setStep("done");

@@ -33,7 +33,7 @@ export function AppShell({ items, badge }: { items: NavItem[]; badge: string }) 
             <Link
               key={i.to}
               to={i.to}
-              activeOptions={{ exact: i.exact }}
+              activeOptions={{ exact: i.exact ?? false }}
               className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm hover:bg-sidebar-accent"
               activeProps={{ className: "bg-sidebar-accent text-sidebar-primary font-bold" }}
             >
@@ -64,7 +64,7 @@ export function AppShell({ items, badge }: { items: NavItem[]; badge: string }) 
           <Link
             key={i.to}
             to={i.to}
-            activeOptions={{ exact: i.exact }}
+            activeOptions={{ exact: i.exact ?? false }}
             className="flex flex-1 flex-col items-center gap-0.5 text-[10px] text-muted-foreground"
             activeProps={{ className: "text-primary font-bold" }}
           >

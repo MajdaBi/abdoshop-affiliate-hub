@@ -21,9 +21,9 @@ function Profile() {
   }, [me.data]);
   const save = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (name.trim().length < 2) return toast.error("الاسم قصير");
+    if (name.trim().length < 2) { toast.error("الاسم قصير"); return; }
     const { error } = await supabase.from("profiles").update({ full_name: name.trim().slice(0, 100), phone: phone.trim().slice(0, 20) }).eq("id", me.data!.id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("تم الحفظ");
     qc.invalidateQueries({ queryKey: ["me"] });
   };
