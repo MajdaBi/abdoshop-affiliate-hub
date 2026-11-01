@@ -14,16 +14,180 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      orders: {
+        Row: {
+          address: string
+          affiliate_id: string
+          city: string
+          color: string
+          commission: number
+          created_at: string
+          customer_name: string
+          customer_phone: string
+          id: string
+          order_number: string
+          product_id: string
+          quantity: number
+          selling_price: number
+          size: string
+          status: Database["public"]["Enums"]["order_status"]
+        }
+        Insert: {
+          address: string
+          affiliate_id?: string
+          city: string
+          color?: string
+          commission?: number
+          created_at?: string
+          customer_name: string
+          customer_phone: string
+          id?: string
+          order_number?: string
+          product_id: string
+          quantity?: number
+          selling_price: number
+          size?: string
+          status?: Database["public"]["Enums"]["order_status"]
+        }
+        Update: {
+          address?: string
+          affiliate_id?: string
+          city?: string
+          color?: string
+          commission?: number
+          created_at?: string
+          customer_name?: string
+          customer_phone?: string
+          id?: string
+          order_number?: string
+          product_id?: string
+          quantity?: number
+          selling_price?: number
+          size?: string
+          status?: Database["public"]["Enums"]["order_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_affiliate_id_fkey"
+            columns: ["affiliate_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "orders_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          active: boolean
+          colors: string[]
+          commission: number
+          created_at: string
+          description: string
+          id: string
+          image_url: string
+          name: string
+          price: number
+          sizes: string[]
+        }
+        Insert: {
+          active?: boolean
+          colors?: string[]
+          commission?: number
+          created_at?: string
+          description?: string
+          id?: string
+          image_url?: string
+          name: string
+          price?: number
+          sizes?: string[]
+        }
+        Update: {
+          active?: boolean
+          colors?: string[]
+          commission?: number
+          created_at?: string
+          description?: string
+          id?: string
+          image_url?: string
+          name?: string
+          price?: number
+          sizes?: string[]
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          active: boolean
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          phone: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          email?: string
+          full_name?: string
+          id: string
+          phone?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          phone?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "affiliate"
+      order_status:
+        | "pending"
+        | "confirmed"
+        | "shipped"
+        | "delivered"
+        | "cancelled"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +314,15 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "affiliate"],
+      order_status: [
+        "pending",
+        "confirmed",
+        "shipped",
+        "delivered",
+        "cancelled",
+      ],
+    },
   },
 } as const
