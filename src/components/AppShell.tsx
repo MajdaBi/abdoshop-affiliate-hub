@@ -1,11 +1,11 @@
-import { Link, Outlet, useNavigate } from "@tanstack/react-router";
+import { Link, Outlet, useNavigate, type LinkProps } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import type { LucideIcon } from "lucide-react";
 import { LogOut } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 export interface NavItem {
-  to: string;
+  to: NonNullable<LinkProps["to"]>;
   label: string;
   icon: LucideIcon;
   exact?: boolean;
