@@ -3,6 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import type { LucideIcon } from "lucide-react";
 import { LogOut } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { Button } from "@/components/ui/button";
 
 export interface NavItem {
   to: NonNullable<LinkProps["to"]>;
@@ -41,19 +42,19 @@ export function AppShell({ items, badge }: { items: NavItem[]; badge: string }) 
             </Link>
           ))}
         </nav>
-        <button onClick={signOut} className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm hover:bg-sidebar-accent">
+        <Button variant="ghost" onClick={signOut} className="justify-start gap-3 text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground">
           <LogOut className="size-4" /> تسجيل الخروج
-        </button>
+        </Button>
       </aside>
 
       <header className="sticky top-0 z-20 flex items-center justify-between bg-sidebar px-4 py-3 text-sidebar-foreground md:hidden">
         <p className="font-display text-lg font-bold">ABDO SHOP</p>
-        <button onClick={signOut} aria-label="تسجيل الخروج" className="flex items-center gap-1 text-xs">
+        <Button variant="ghost" size="sm" onClick={signOut} aria-label="تسجيل الخروج" className="gap-1 text-xs text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground">
           <LogOut className="size-4" /> خروج
-        </button>
+        </Button>
       </header>
 
-      <main className="flex-1 px-4 pb-28 pt-5 md:px-8 md:pb-10 md:pt-8">
+      <main className="min-w-0 flex-1 px-4 pb-28 pt-5 md:px-8 md:pb-10 md:pt-8">
         <div className="mx-auto max-w-6xl">
           <Outlet />
         </div>
