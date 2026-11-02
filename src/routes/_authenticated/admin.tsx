@@ -1,10 +1,14 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { LayoutDashboard } from "lucide-react";
+import { LayoutDashboard, Users, Package, ShoppingBag, Wallet } from "lucide-react";
 import { AppShell, type NavItem } from "@/components/AppShell";
 import { getRoleHome } from "@/lib/session";
 
 const items: NavItem[] = [
   { to: "/admin", label: "لوحة التحكم", icon: LayoutDashboard, exact: true },
+  { to: "/admin/affiliates", label: "الأفلييتات", icon: Users },
+  { to: "/admin/products", label: "المنتجات", icon: Package },
+  { to: "/admin/orders", label: "الطلبات", icon: ShoppingBag },
+  { to: "/admin/commissions", label: "العمولات", icon: Wallet },
 ];
 
 export const Route = createFileRoute("/_authenticated/admin")({

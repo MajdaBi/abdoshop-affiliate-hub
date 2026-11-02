@@ -8,8 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PageTitle } from "@/components/StatusBadge";
+import { pageHead } from "@/lib/page-head";
 
-export const Route = createFileRoute("/_authenticated/app/profile")({ component: Profile });
+export const Route = createFileRoute("/_authenticated/app/profile")({ head: () => pageHead("حسابي", "معلومات حساب الأفلييت وحالة تفعيله."), component: Profile });
 
 function Profile() {
   const me = useMe();
@@ -21,8 +22,9 @@ function Profile() {
   }, [me.data]);
   const save = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!me.data) return;
     if (name.trim().length < 2) { toast.error("الاسم قصير"); return; }
-    const { error } = await supabase.from("profiles").update({ full_name: name.trim().slice(0, 100), phone: phone.trim().slice(0, 20) }).eq("id", me.data!.id);
+    const { error } = await supabase.from("profiles").update({ full_name: name.trim().slice(0, 100), phone: phone.trim().slice(0, 20) }).eq("id", me.data.id);
     if (error) { toast.error(error.message); return; }
     toast.success("تم الحفظ");
     qc.invalidateQueries({ queryKey: ["me"] });

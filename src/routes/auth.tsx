@@ -16,6 +16,8 @@ export const Route = createFileRoute("/auth")({
       { name: "description", content: "ادخل لحسابك أو أنشئ حساب أفلييت جديد في ABDO SHOP." },
       { property: "og:title", content: "تسجيل الدخول — ABDO SHOP" },
       { property: "og:description", content: "ادخل لحسابك أو أنشئ حساب أفلييت جديد." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: AuthPage,

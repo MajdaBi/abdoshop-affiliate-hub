@@ -4,8 +4,9 @@ import { PageTitle, StatCard } from "@/components/StatusBadge";
 import { StatusBadge } from "@/components/StatusBadge";
 import { ordersQuery } from "@/lib/queries";
 import { dh, summarizeCommissions } from "@/lib/commission";
+import { pageHead } from "@/lib/page-head";
 
-export const Route = createFileRoute("/_authenticated/app/commissions")({ component: Commissions });
+export const Route = createFileRoute("/_authenticated/app/commissions")({ head: () => pageHead("عمولاتي", "تتبع العمولات المنتظرة والمؤكدة والمكتسبة."), component: Commissions });
 
 function Commissions() {
   const { data = [] } = useQuery(ordersQuery());
