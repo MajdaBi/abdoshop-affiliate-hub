@@ -13,10 +13,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { PageTitle } from "@/components/StatusBadge";
 import { productsQuery } from "@/lib/queries";
 import { dh } from "@/lib/commission";
+import { pageHead } from "@/lib/page-head";
 
 export const Route = createFileRoute("/_authenticated/app/new-order")({
   validateSearch: (s: Record<string, unknown>): { product?: string } => (typeof s["product"] === "string" ? { product: s["product"] } : {}),
   component: NewOrder,
+  head: () => pageHead("إضافة طلب", "إرسال طلب جديد للزبون وتتبع عمولته."),
 });
 
 const schema = z.object({
@@ -48,6 +50,7 @@ function NewOrder() {
     e.preventDefault();
     const p = schema.safeParse(f);
     if (!p.success) { toast.error(p.error.issues[0]?.message ?? "خطأ"); return; }
+    if (!product?.active) { toast.error("المنتج غير متوفر"); return; }
     if (product?.colors.length && !f.color) { toast.error("اختار اللون"); return; }
     if (product?.sizes.length && !f.size) { toast.error("اختار المقاس"); return; }
     setStep("review");
@@ -56,13 +59,15 @@ function NewOrder() {
   const submit = async () => {
     const p = schema.parse(f);
     setBusy(true);
-    const { data: u } = await supabase.auth.getUser();
-    const { data, error } = await supabase.from("orders").insert({ ...p, affiliate_id: u.user!.id }).select("order_number").single();
-    setBusy(false);
-    if (error) { toast.error("ما تقدرش تزيد الطلب: " + error.message); return; }
-    setOrderNo(data.order_number);
-    qc.invalidateQueries({ queryKey: ["orders"] });
-    setStep("done");
+    try {
+      const { data: u } = await supabase.auth.getUser();
+      if (!u.user || !product?.active) { toast.error("تأكد من الحساب والمنتج"); return; }
+      const { data, error } = await supabase.from("orders").insert({ ...p, affiliate_id: u.user.id, commission: product.commission * p.quantity }).select("order_number").single();
+      if (error) throw error;
+      setOrderNo(data.order_number);
+      await qc.invalidateQueries({ queryKey: ["orders"] });
+      setStep("done");
+    } catch { toast.error("ما تقدرش تزيد الطلب. تأكد من المعلومات وحالة الحساب."); } finally { setBusy(false); }
   };
 
   if (step === "done")
@@ -116,7 +121,7 @@ function NewOrder() {
             <Label>المنتج</Label>
             <Select value={f.product_id} onValueChange={(v) => { const p = products.find((x) => x.id === v); setF({ ...f, product_id: v, color: "", size: "", selling_price: p ? String(p.price) : "" }); }}>
               <SelectTrigger><SelectValue placeholder="اختار المنتج" /></SelectTrigger>
-              <SelectContent>{products.map((p) => <SelectItem key={p.id} value={p.id}>{p.name} — {dh(p.price)}</SelectItem>)}</SelectContent>
+              <SelectContent>{products.filter((p) => p.active).map((p) => <SelectItem key={p.id} value={p.id}>{p.name} — {dh(p.price)}</SelectItem>)}</SelectContent>
             </Select>
           </div>
           {product && product.colors.length > 0 && (

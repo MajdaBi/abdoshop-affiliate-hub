@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button";
 import { PageTitle } from "@/components/StatusBadge";
 import { productsQuery } from "@/lib/queries";
 import { dh } from "@/lib/commission";
+import { pageHead } from "@/lib/page-head";
 
-export const Route = createFileRoute("/_authenticated/app/products")({ component: Products });
+export const Route = createFileRoute("/_authenticated/app/products")({ head: () => pageHead("المنتجات", "منتجات ABDO SHOP المتوفرة وأسعارها وعمولاتها."), component: Products });
 
 function Products() {
   const { data = [] } = useQuery(productsQuery);
@@ -13,7 +14,7 @@ function Products() {
     <>
       <PageTitle title="المنتجات" sub="المنتجات المتوفرة للبيع" />
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {data.map((p) => (
+        {data.filter((p) => p.active).map((p) => (
           <div key={p.id} className="overflow-hidden rounded-xl border bg-card shadow-soft">
             {p.image_url && <img src={p.image_url} alt={p.name} loading="lazy" width={400} height={400} className="aspect-square w-full object-cover" />}
             <div className="space-y-2 p-4">

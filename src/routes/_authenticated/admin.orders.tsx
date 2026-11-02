@@ -12,7 +12,7 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@
 import { AdminError, AdminNotFound } from "@/components/AdminStates";
 
 export const Route = createFileRoute("/_authenticated/admin/orders")({
-  validateSearch: (s: Record<string, unknown>): { q: string; status: OrderStatus | "all" } => ({ q: typeof s.q === "string" ? s.q : "", status: STATUSES.includes(s.status as OrderStatus) ? s.status as OrderStatus : "all" }),
+  validateSearch: (s: Record<string, unknown>): { q?: string; status?: OrderStatus | "all" } => ({ q: typeof s["q"] === "string" ? s["q"] : "", status: STATUSES.includes(s["status"] as OrderStatus) ? s["status"] as OrderStatus : "all" }),
   loader: ({ context }) => context.queryClient.ensureQueryData(ordersQuery(true)),
   head: () => pageHead("إدارة الطلبات", "متابعة طلبات جميع الأفلييتات وتحديث حالة التوصيل."),
   errorComponent: AdminError, notFoundComponent: AdminNotFound, component: Orders,
@@ -20,7 +20,8 @@ export const Route = createFileRoute("/_authenticated/admin/orders")({
 
 function Orders() {
   const { data } = useSuspenseQuery(ordersQuery(true));
-  const search = Route.useSearch();
+  const { q = "", status = "all" } = Route.useSearch();
+  const search = { q, status };
   const navigate = Route.useNavigate();
   const qc = useQueryClient();
   const mutation = useMutation({

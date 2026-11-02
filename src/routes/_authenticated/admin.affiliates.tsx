@@ -11,7 +11,7 @@ import { pageHead } from "@/lib/page-head";
 import { fmtDate } from "@/lib/commission";
 
 export const Route = createFileRoute("/_authenticated/admin/affiliates")({
-  validateSearch: (s: Record<string, unknown>) => ({ q: typeof s.q === "string" ? s.q : "" }),
+  validateSearch: (s: Record<string, unknown>): { q?: string } => ({ q: typeof s["q"] === "string" ? s["q"] : "" }),
   loader: ({ context }) => context.queryClient.ensureQueryData(affiliatesQuery),
   head: () => pageHead("الأفلييتات", "إدارة حسابات الأفلييتات وتفعيلها أو إيقافها."),
   errorComponent: AdminError, notFoundComponent: AdminNotFound, component: Affiliates,
@@ -19,7 +19,7 @@ export const Route = createFileRoute("/_authenticated/admin/affiliates")({
 
 function Affiliates() {
   const { data } = useSuspenseQuery(affiliatesQuery);
-  const { q } = Route.useSearch();
+  const { q = "" } = Route.useSearch();
   const navigate = Route.useNavigate();
   const qc = useQueryClient();
   const mutation = useMutation({

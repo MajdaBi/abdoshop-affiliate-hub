@@ -6,8 +6,9 @@ import { OrderList } from "@/components/OrderList";
 import { ordersQuery } from "@/lib/queries";
 import { STATUSES, STATUS_LABEL, type OrderStatus } from "@/lib/commission";
 import { Button } from "@/components/ui/button";
+import { pageHead } from "@/lib/page-head";
 
-export const Route = createFileRoute("/_authenticated/app/orders")({ component: MyOrders });
+export const Route = createFileRoute("/_authenticated/app/orders")({ head: () => pageHead("طلباتي", "طلبات زبنائك وحالات التأكيد والشحن والتوصيل."), component: MyOrders });
 
 function MyOrders() {
   const { data = [] } = useQuery(ordersQuery());

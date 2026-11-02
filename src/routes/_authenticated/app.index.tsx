@@ -7,8 +7,9 @@ import { OrderList } from "@/components/OrderList";
 import { ordersQuery } from "@/lib/queries";
 import { useMe } from "@/lib/session";
 import { dh, summarizeCommissions } from "@/lib/commission";
+import { pageHead } from "@/lib/page-head";
 
-export const Route = createFileRoute("/_authenticated/app/")({ component: Dashboard });
+export const Route = createFileRoute("/_authenticated/app/")({ head: () => pageHead("لوحة الأفلييت", "ملخص نشاط الأفلييت وآخر الطلبات والعمولات."), component: Dashboard });
 
 function Dashboard() {
   const me = useMe();
