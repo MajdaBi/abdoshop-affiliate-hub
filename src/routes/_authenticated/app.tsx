@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { LayoutDashboard, ShoppingBag, PlusCircle, ListOrdered, Wallet, User } from "lucide-react";
 import { AppShell, type NavItem } from "@/components/AppShell";
+import { pageHead } from "@/lib/page-head";
 
 const items: NavItem[] = [
   { to: "/app", label: "لوحة التحكم", icon: LayoutDashboard, exact: true },
@@ -8,10 +9,10 @@ const items: NavItem[] = [
   { to: "/app/new-order", label: "إضافة طلب", icon: PlusCircle },
   { to: "/app/orders", label: "طلباتي", icon: ListOrdered },
   { to: "/app/commissions", label: "العمولات", icon: Wallet },
-  { to: "/app/profile", label: "الحساب", icon: User, mobile: false },
+  { to: "/app/profile", label: "حسابي والإعدادات", icon: User },
 ];
 
 export const Route = createFileRoute("/_authenticated/app")({
-  head: () => ({ meta: [{ title: "لوحة الأفلييت — ABDO SHOP" }] }),
+  head: () => pageHead("منطقة الأفلييت", "حساب الأفلييت والطلبات والعمولات وإعدادات الحساب."),
   component: () => <AppShell items={items} badge="حساب الأفلييت" />,
 });

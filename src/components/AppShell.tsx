@@ -66,7 +66,7 @@ export function AppShell({ items, badge }: { items: NavItem[]; badge: string }) 
             key={i.to}
             to={i.to}
             activeOptions={{ exact: i.exact ?? false }}
-            className="flex flex-1 flex-col items-center gap-0.5 text-[10px] text-muted-foreground"
+             className="flex min-w-0 flex-1 flex-col items-center gap-0.5 px-0.5 text-center text-[10px] text-muted-foreground"
             activeProps={{ className: "text-primary font-bold" }}
           >
             <i.icon className="size-5" />
