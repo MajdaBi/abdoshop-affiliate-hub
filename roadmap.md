@@ -1,4 +1,6 @@
 # ABDO SHOP completion
+- [ ] Add shared secure account settings for admin and affiliate profiles.
+- [ ] Verify profile ownership, email confirmation and current-password enforcement with regression tests.
 - [x] Admin dashboard and statistics
 - [x] Affiliate activation management
 - [x] Product creation and editing
