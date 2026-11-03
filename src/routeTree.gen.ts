@@ -19,6 +19,7 @@ import { Route as AuthenticatedAdminAffiliatesRouteImport } from './routes/_auth
 import { Route as AuthenticatedAdminCommissionsRouteImport } from './routes/_authenticated/admin.commissions'
 import { Route as AuthenticatedAdminOrdersRouteImport } from './routes/_authenticated/admin.orders'
 import { Route as AuthenticatedAdminProductsRouteImport } from './routes/_authenticated/admin.products'
+import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
 import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticated/app.index'
 import { Route as AuthenticatedAppCommissionsRouteImport } from './routes/_authenticated/app.commissions'
 import { Route as AuthenticatedAppNewOrderRouteImport } from './routes/_authenticated/app.new-order'
@@ -79,6 +80,12 @@ const AuthenticatedAdminProductsRoute =
     path: '/products',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminSettingsRoute =
+  AuthenticatedAdminSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAppIndexRoute = AuthenticatedAppIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -122,6 +129,7 @@ export interface FileRoutesByFullPath {
   '/admin/commissions': typeof AuthenticatedAdminCommissionsRoute
   '/admin/orders': typeof AuthenticatedAdminOrdersRoute
   '/admin/products': typeof AuthenticatedAdminProductsRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/app/commissions': typeof AuthenticatedAppCommissionsRoute
   '/app/new-order': typeof AuthenticatedAppNewOrderRoute
   '/app/orders': typeof AuthenticatedAppOrdersRoute
@@ -137,6 +145,7 @@ export interface FileRoutesByTo {
   '/admin/commissions': typeof AuthenticatedAdminCommissionsRoute
   '/admin/orders': typeof AuthenticatedAdminOrdersRoute
   '/admin/products': typeof AuthenticatedAdminProductsRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/app/commissions': typeof AuthenticatedAppCommissionsRoute
   '/app/new-order': typeof AuthenticatedAppNewOrderRoute
   '/app/orders': typeof AuthenticatedAppOrdersRoute
@@ -156,6 +165,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/commissions': typeof AuthenticatedAdminCommissionsRoute
   '/_authenticated/admin/orders': typeof AuthenticatedAdminOrdersRoute
   '/_authenticated/admin/products': typeof AuthenticatedAdminProductsRoute
+  '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/_authenticated/app/commissions': typeof AuthenticatedAppCommissionsRoute
   '/_authenticated/app/new-order': typeof AuthenticatedAppNewOrderRoute
   '/_authenticated/app/orders': typeof AuthenticatedAppOrdersRoute
@@ -175,6 +185,7 @@ export interface FileRouteTypes {
     | '/admin/commissions'
     | '/admin/orders'
     | '/admin/products'
+    | '/admin/settings'
     | '/app/commissions'
     | '/app/new-order'
     | '/app/orders'
@@ -190,6 +201,7 @@ export interface FileRouteTypes {
     | '/admin/commissions'
     | '/admin/orders'
     | '/admin/products'
+    | '/admin/settings'
     | '/app/commissions'
     | '/app/new-order'
     | '/app/orders'
@@ -208,6 +220,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/commissions'
     | '/_authenticated/admin/orders'
     | '/_authenticated/admin/products'
+    | '/_authenticated/admin/settings'
     | '/_authenticated/app/commissions'
     | '/_authenticated/app/new-order'
     | '/_authenticated/app/orders'
@@ -295,6 +308,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminProductsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/settings': {
+      id: '/_authenticated/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AuthenticatedAdminSettingsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/app/': {
       id: '/_authenticated/app/'
       path: '/'
@@ -345,6 +365,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminCommissionsRoute: typeof AuthenticatedAdminCommissionsRoute
   AuthenticatedAdminOrdersRoute: typeof AuthenticatedAdminOrdersRoute
   AuthenticatedAdminProductsRoute: typeof AuthenticatedAdminProductsRoute
+  AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
@@ -353,6 +374,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminCommissionsRoute: AuthenticatedAdminCommissionsRoute,
   AuthenticatedAdminOrdersRoute: AuthenticatedAdminOrdersRoute,
   AuthenticatedAdminProductsRoute: AuthenticatedAdminProductsRoute,
+  AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
 
