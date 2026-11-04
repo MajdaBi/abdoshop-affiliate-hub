@@ -1,6 +1,7 @@
 # ABDO SHOP completion
-- [ ] Add shared secure account settings for admin and affiliate profiles.
-- [ ] Verify profile ownership, email confirmation and current-password enforcement with regression tests.
+- [x] Add shared secure account settings for admin and affiliate profiles.
+- [ ] Verify existing profile save and wrong-password rejection with the current authenticated user.
+- [ ] Verify actual email confirmation and successful password change without altering design, schema or permissions; requires user-controlled email confirmation and current password.
 - [x] Admin dashboard and statistics
 - [x] Affiliate activation management
 - [x] Product creation and editing
