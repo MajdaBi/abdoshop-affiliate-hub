@@ -4,16 +4,16 @@ import { StatusBadge } from "@/components/StatusBadge";
 import { dh, fmtDate } from "@/lib/commission";
 import type { OrderRow } from "@/lib/queries";
 
-export function OrderList({ orders, admin, renderActions }: { orders: OrderRow[]; admin?: boolean; renderActions?: (o: OrderRow) => ReactNode }) {
+export function OrderList({ orders, admin, renderActions, renderListActions }: { orders: OrderRow[]; admin?: boolean; renderActions?: (o: OrderRow) => ReactNode; renderListActions?: (o: OrderRow) => ReactNode }) {
   const [open, setOpen] = useState<OrderRow | null>(null);
-  const current = open ? orders.find((o) => o.id === open.id) ?? open : null;
+  const current = open ? orders.find((o) => o.id === open.id) ?? null : null;
   if (!orders.length) return <p className="rounded-xl border bg-card p-8 text-center text-muted-foreground">ما كاين حتى طلب.</p>;
   return (
     <>
       {/* Mobile cards */}
       <div className="space-y-3 md:hidden">
         {orders.map((o) => (
-          <button key={o.id} onClick={() => setOpen(o)} className="w-full rounded-xl border bg-card p-4 text-start shadow-soft">
+          <div key={o.id} className="rounded-xl border bg-card shadow-soft"><button onClick={() => setOpen(o)} className="w-full p-4 text-start">
             <div className="flex items-center justify-between">
               <span className="font-bold" dir="ltr">{o.order_number}</span>
               <StatusBadge status={o.status} />
@@ -24,7 +24,7 @@ export function OrderList({ orders, admin, renderActions }: { orders: OrderRow[]
               <span>{dh(o.selling_price)}</span>
               <span className="text-success">عمولة: {dh(o.commission)}</span>
             </div>
-          </button>
+          </button>{admin && renderListActions && <div className="px-4 pb-4">{renderListActions(o)}</div>}</div>
         ))}
       </div>
       {/* Desktop table */}
@@ -35,6 +35,7 @@ export function OrderList({ orders, admin, renderActions }: { orders: OrderRow[]
               {["رقم الطلب", "الزبون", ...(admin ? ["الهاتف"] : []), "المنتج", "المدينة", ...(admin ? ["الأفلييت"] : []), "الثمن", "العمولة", "التاريخ", "الحالة"].map((h) => (
                 <th key={h} className="px-3 py-3 text-start font-medium">{h}</th>
               ))}
+              {admin && renderListActions && <th className="px-3 py-3 text-start font-medium">الإجراءات</th>}
             </tr>
           </thead>
           <tbody>
@@ -50,6 +51,7 @@ export function OrderList({ orders, admin, renderActions }: { orders: OrderRow[]
                 <td className="px-3 py-3 text-success">{dh(o.commission)}</td>
                 <td className="px-3 py-3">{fmtDate(o.created_at)}</td>
                 <td className="px-3 py-3"><StatusBadge status={o.status} /></td>
+                {admin && renderListActions && <td className="px-3 py-3" onClick={(e) => e.stopPropagation()}>{renderListActions(o)}</td>}
               </tr>
             ))}
           </tbody>
