@@ -1,12 +1,13 @@
 # ABDO SHOP completion
 - [x] Add shared secure account settings for admin and affiliate profiles.
-- [ ] Verify existing profile save and wrong-password rejection with the current authenticated user.
-- [ ] Verify actual email confirmation and successful password change without altering design, schema or permissions; requires user-controlled email confirmation and current password.
+- [x] Verify existing profile save and wrong-password rejection with the current authenticated user; profile read-back, unchanged-email validation and admin access denial passed.
+- [x] Existing settings and access regression tests (13 passing); mobile layout and live settings flow have no overflow or page errors.
+- [ ] Verify actual email confirmation and successful password change without altering design, schema or permissions; blocked on the user entering their current password and confirming their new email in the existing Settings page. Do not request passwords in chat or replace credentials for testing.
 - [x] Admin dashboard and statistics
 - [x] Affiliate activation management
 - [x] Product creation and editing
 - [x] Order status management and filters
 - [x] Per-affiliate commission reporting
 - [x] Route metadata and regression tests (11 passing)
-- [ ] Verify signed-in workflows: blocked until the owner creates the first account; no auth users exist.
+- [ ] Verify signed-in admin management workflows: requires an admin session; current session is an affiliate.
 - [ ] Confirm warning-free protected hard loads: preview router raises recoverable hydration errors before redirecting to sign-in; reported to platform team.
