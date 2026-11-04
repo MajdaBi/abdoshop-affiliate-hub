@@ -4,7 +4,7 @@ import { StatusBadge } from "@/components/StatusBadge";
 import { dh, fmtDate } from "@/lib/commission";
 import type { OrderRow } from "@/lib/queries";
 
-export function OrderList({ orders, admin, renderActions, renderListActions }: { orders: OrderRow[]; admin?: boolean; renderActions?: (o: OrderRow) => ReactNode; renderListActions?: (o: OrderRow) => ReactNode }) {
+export function OrderList({ orders, admin, renderActions, renderListActions }: { orders: OrderRow[]; admin?: boolean; renderActions?: (o: OrderRow) => ReactNode; renderListActions?: ((o: OrderRow) => ReactNode) | undefined }) {
   const [open, setOpen] = useState<OrderRow | null>(null);
   const current = open ? orders.find((o) => o.id === open.id) ?? null : null;
   if (!orders.length) return <p className="rounded-xl border bg-card p-8 text-center text-muted-foreground">ما كاين حتى طلب.</p>;
