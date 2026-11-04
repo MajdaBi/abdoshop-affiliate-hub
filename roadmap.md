@@ -1,6 +1,7 @@
 # ABDO SHOP completion
-- [ ] Add admin-only confirmed single-order deletion using existing order ID and database permissions.
-- [ ] Test deletion scope, failure handling, refresh and affiliate access restrictions.
+- [x] Add admin-only confirmed single-order deletion using existing order ID and database permissions; no schema or permission changes.
+- [x] Test deletion scope, failure handling and refresh; live admin confirmation/cancel/delete tested with a disposable order, unrelated records unchanged; live affiliate deletion denied by existing RLS.
+- [ ] Verify new deletion controls on published application: requires publishing updated application; local end-to-end flow passed against shared Cloud backend.
 - [x] Add shared secure account settings for admin and affiliate profiles.
 - [x] Verify existing profile save and wrong-password rejection with the current authenticated user; profile read-back, unchanged-email validation and admin access denial passed.
 - [x] Existing settings and access regression tests (13 passing); mobile layout and live settings flow have no overflow or page errors.
