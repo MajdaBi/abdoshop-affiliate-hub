@@ -16,3 +16,4 @@
 - Admin and affiliate settings share AccountSettings; preserve the existing affiliate profile URL so old account links continue working.
 - Profile writes use an authenticated server function with a strict name/phone schema and session-derived identity; database triggers preserve identity and mirror only confirmed Auth email changes.
 - Settings password changes verify the current password server-side with an isolated Auth client before updating; never expose role or activation fields in self-service forms.
+- Admin order deletion uses the existing browser Data API, filters by validated order UUID, and requires a returned deleted ID; existing RLS is authoritative and related records are untouched.
