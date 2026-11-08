@@ -1,4 +1,6 @@
 # ABDO SHOP completion
+- [x] Refreshed existing Cloud runtime bindings; verified name/phone save, success notice, direct database read-back, reload, sign-out and fresh authenticated session persistence; original details restored. No application, design, schema, or permission changes.
+- [ ] Apply refreshed runtime connection to the published app: requires publishing; complete save verified locally against the existing shared Cloud database.
 - [x] Add admin-only confirmed single-order deletion using existing order ID and database permissions; no schema or permission changes.
 - [x] Test deletion scope, failure handling and refresh; live admin confirmation/cancel/delete tested with a disposable order, unrelated records unchanged; live affiliate deletion denied by existing RLS.
 - [ ] Verify new deletion controls on published application: requires publishing updated application; local end-to-end flow passed against shared Cloud backend.
