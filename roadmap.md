@@ -1,4 +1,5 @@
 # ABDO SHOP completion
+- [x] Replaced manual product image links with persistent admin photo upload; add and replacement passed with database read-back and refresh, original products unchanged, mobile layout checked, storage policies confirmed admin-only upload and authenticated reads; 20 regression tests passed. Test product and uploads removed.
 - [x] Refreshed existing Cloud runtime bindings; verified name/phone save, success notice, direct database read-back, reload, sign-out and fresh authenticated session persistence; original details restored. No application, design, schema, or permission changes.
 - [x] Published app (abdoshop-affiliate-hub.lovable.app) verified: name save, success notice, persistence in a fresh signed-in session; original name restored.
 - [x] Add admin-only confirmed single-order deletion using existing order ID and database permissions; no schema or permission changes.

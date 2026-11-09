@@ -1,0 +1,3 @@
+CREATE POLICY "product photos authenticated read" ON storage.objects FOR SELECT TO authenticated USING (bucket_id = 'product-photos');
+CREATE POLICY "product photos admin upload" ON storage.objects FOR INSERT TO authenticated WITH CHECK (bucket_id = 'product-photos' AND public.has_role(auth.uid(), 'admin'));
+CREATE POLICY "product photos admin cleanup" ON storage.objects FOR DELETE TO authenticated USING (bucket_id = 'product-photos' AND public.has_role(auth.uid(), 'admin'));

@@ -5,6 +5,7 @@ import { PageTitle } from "@/components/StatusBadge";
 import { productsQuery } from "@/lib/queries";
 import { dh } from "@/lib/commission";
 import { pageHead } from "@/lib/page-head";
+import { ProductPhoto } from "@/components/ProductPhoto";
 
 export const Route = createFileRoute("/_authenticated/app/products")({ head: () => pageHead("المنتجات", "منتجات ABDO SHOP المتوفرة وأسعارها وعمولاتها."), component: Products });
 
@@ -16,7 +17,7 @@ function Products() {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {data.filter((p) => p.active).map((p) => (
           <div key={p.id} className="overflow-hidden rounded-xl border bg-card shadow-soft">
-            {p.image_url && <img src={p.image_url} alt={p.name} loading="lazy" width={400} height={400} className="aspect-square w-full object-cover" />}
+            {p.image_url && <ProductPhoto reference={p.image_url} alt={p.name} loading="lazy" width={400} height={400} className="aspect-square w-full object-cover" />}
             <div className="space-y-2 p-4">
               <div className="flex items-start justify-between gap-2">
                 <h3 className="text-lg font-bold">{p.name}</h3>
